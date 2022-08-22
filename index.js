@@ -1,10 +1,29 @@
-const reCaptchaSecret = "6LeIypghAAAAABEpBkQm6FwdausiSfhWmWx2zBxg"
+const http = require("http")
+const server = http.createServer((req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*")
+})
 
-fetch(
-  `https://www.google.com/recaptcha/api/siteverify?secret=${reCaptchaSecret}&response=${"03ANYolqsRsQVk5r5fbjzwO-rARo3Pfri2MtLMmUDR4rJErsGErrNViF9LpqVx5itVisohuyTLf2mW5tiYho7DbS2ebDlQkeGacqtlmqzOTWJMOMONdiaO3V5ng07ypTZKQuIEDVVr_sZmS9X3Vs1qop0AWr-QnAzSCYTJ16O-YjbxzY9RYZD_Dn6LLV1pzJCz-bAqPUMjkVkUdGCDBj0HSbwFPQVgzl3DLE2qMIBhKXuK50sqqeySMSnV2subuq3dIz0jseB5NoUz4fm7luHypv9naqtNMdGXjqGTVy_dGLRqvoVFBVHX5EU_iVr8yr6THBKcWNNxQBpfO8rUx-9wBiqBSx30t66OXIcEXx2iWlmmn5SHKnb2lBziNsD-EYv94HIcGj0emiCmsmQ_tvoi0Nn5BveqTdaZc8pye90W-VY1mqG0kEHW_bUpwjq1haLHfK_5r3aUN8t1mpa8B9605_KIQr33wzo_B8uWEJfGcRRyg8osVk_14ArtUKsmTuyV20BgjvhO-kPK"}`,
-  {
-    method: "POST",
+server.on("request", (req, res) => {
+  if (req.method === "POST" && req.url === "/register") {
+    req.on("data", (chunk) => {
+      const data = JSON.parse(chunk)
+      const reCaptchaSecret = "6LeIypghAAAAABEpBkQm6FwdausiSfhWmWx2zBxg"
+
+      fetch(
+        `https://www.google.com/recaptcha/api/siteverify?secret=${reCaptchaSecret}&response=${data.token}`,
+        {
+          method: "POST",
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => res.end(JSON.stringify(data)))
+    })
   }
-)
-  .then((res) => res.json())
-  .then((data) => console.log({ data }))
+})
+
+const port = 3000
+const host = "127.0.0.1"
+
+server.listen(port, host, () => {
+  console.log(`Server running at http://${host}:${port}/`)
+})

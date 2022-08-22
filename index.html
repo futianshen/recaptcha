@@ -11,15 +11,16 @@
     const reCaptchaSiteKey = "6LeIypghAAAAABVmPBvDN_XLenW8DfxPxlO7fbBE"
     grecaptcha.ready(function () {
       grecaptcha.execute(reCaptchaSiteKey, { action: 'submit' }).then(function (token) {
-        console.log(token)
-        // Add your logic to submit to your backend server here.
+        fetch('http://127.0.0.1:3000/register', {
+          method: "POST",
+          body: JSON.stringify({
+            token,
+            account: "account",
+            password: "password"
+          })
+        })
       });
     });
-    // [x]取得 recaptcha key
-    // []將這些東西送到 server
-    // [x]server call 第三方服務獲得分數
-    // []比較手動輸入和機器輸入的差別
-    // []如何使用原生的 JS 主動觸發 recaptcha ?
   </script>
 </head>
 

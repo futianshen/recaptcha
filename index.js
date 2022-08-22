@@ -7,7 +7,7 @@ server.on("request", (req, res) => {
   if (req.method === "POST" && req.url === "/register") {
     req.on("data", (chunk) => {
       const data = JSON.parse(chunk)
-      const reCaptchaSecret = "6LeIypghAAAAABEpBkQm6FwdausiSfhWmWx2zBxg"
+      const reCaptchaSecret = ""
 
       fetch(
         `https://www.google.com/recaptcha/api/siteverify?secret=${reCaptchaSecret}&response=${data.token}`,

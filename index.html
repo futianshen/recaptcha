@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://www.google.com/recaptcha/api.js?render=6LeIypghAAAAABVmPBvDN_XLenW8DfxPxlO7fbBE"></script>
+  <script>
+    const reCaptchaSiteKey = "6LeIypghAAAAABVmPBvDN_XLenW8DfxPxlO7fbBE"
+    grecaptcha.ready(function () {
+      grecaptcha.execute(reCaptchaSiteKey, { action: 'submit' }).then(function (token) {
+        console.log(token)
+        // Add your logic to submit to your backend server here.
+      });
+    });
+    // [x]取得 recaptcha key
+    // []將這些東西送到 server
+    // [x]server call 第三方服務獲得分數
+    // []比較手動輸入和機器輸入的差別
+    // []如何使用原生的 JS 主動觸發 recaptcha ?
+  </script>
+</head>
+
+<body></body>
+
+</html>
